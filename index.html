@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MimbarGuru.com</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body.dark-mode {
+      background-color: #121212;
+      color: #f1f1f1;
+    }
+    .dark-mode .card {
+      background-color: #1e1e1e;
+      color: #f1f1f1;
+    }
+    .dark-mode .navbar {
+      background-color: #1e1e1e !important;
+    }
+    .language-toggle, .theme-toggle {
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-light navbar-light px-3" id="navbar">
+    <a class="navbar-brand fw-bold" href="#">MimbarGuru.com</a>
+    <div class="ms-auto d-flex">
+      <button id="themeToggle" class="btn btn-outline-secondary me-2">🌙</button>
+      <select id="langToggle" class="form-select" style="width:auto;">
+        <option value="id">🇮🇩 ID</option>
+        <option value="en">🇬🇧 EN</option>
+      </select>
+    </div>
+  </nav>
+
+  <div class="container py-5">
+    <div class="text-center">
+      <h1 id="heading"></h1>
+      <p id="intro" class="lead mt-3"></p>
+    </div>
+
+    <div class="card mt-5 shadow">
+      <div class="card-body">
+        <h5 class="card-title" id="sectionTitle"></h5>
+        <p class="card-text" id="sectionContent1"></p>
+        <p class="card-text" id="sectionContent2"></p>
+        <p class="card-text" id="sectionContent3"></p>
+        <p class="card-text" id="sectionContent4"></p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="text-center py-4">
+    <small>&copy; 2025 MimbarGuru.com</small>
+  </footer>
+
+  <script>
+    const translations = {
+      id: {
+        heading: "Selamat Datang di MimbarGuru.com",
+        intro: "MimbarGuru.com lahir dari keprihatinan terhadap maraknya penyalahgunaan media sosial yang kerap disalahgunakan untuk menyebarkan ujaran kebencian, hoaks, perundungan, fitnah, dan perilaku tidak etis lainnya.",
+        sectionTitle: "Mengapa MimbarGuru.com?",
+        sectionContent1: "Kami mulai bertanya: mengapa seseorang begitu mudah menuliskan hal-hal yang menyakitkan dan melanggar etika? Jawabannya sering kali karena mereka merasa aman di balik akun palsu atau anonim.",
+        sectionContent2: "Maka dari itu, MimbarGuru.com hanya mengizinkan pendaftaran melalui akun resmi belajar.id — akun yang menggunakan nama asli, unik, dan tidak bisa dibuat lebih dari satu untuk setiap individu.",
+        sectionContent3: "Kami percaya bahwa dunia digital harus menjadi tempat yang aman, ramah, dan membangun. Dengan pengguna yang teridentifikasi dengan jelas, setiap orang akan lebih bertanggung jawab atas apa yang dituliskannya.",
+        sectionContent4: "Karena kami ingin menghadirkan ruang sosial yang sehat bagi para pendidik, tenaga kependidikan, dan insan pendidikan Indonesia. Di sini, Anda bisa berdiskusi, berbagi inspirasi, dan membangun kolaborasi tanpa rasa takut akan serangan atau cemoohan. Mari bersama-sama menjadikan dunia maya sebagai tempat yang mencerdaskan dan menguatkan, bukan sebaliknya."
+      },
+      en: {
+        heading: "Welcome to MimbarGuru.com",
+        intro: "MimbarGuru.com was born out of concern over the widespread misuse of social media, which is often used to spread hate speech, hoaxes, bullying, slander, and other unethical behaviors.",
+        sectionTitle: "Why MimbarGuru.com?",
+        sectionContent1: "We began to ask: why do people so easily write hurtful and unethical things? The answer often lies in the sense of safety provided by fake or anonymous accounts.",
+        sectionContent2: "Therefore, MimbarGuru.com only allows registration through official belajar.id accounts — accounts that use real names, are unique, and cannot be created more than once per individual.",
+        sectionContent3: "We believe that the digital world should be a safe, friendly, and constructive space. With clearly identified users, everyone becomes more responsible for what they write.",
+        sectionContent4: "Because we want to provide a healthy social space for educators, education staff, and the broader education community in Indonesia. Here, you can discuss, share inspiration, and build collaboration without fear of attacks or ridicule. Let us work together to make the digital world a place that enlightens and empowers — not the other way around."
+      }
+    };
+
+    const langToggle = document.getElementById('langToggle');
+    const themeToggle = document.getElementById('themeToggle');
+
+    function setLanguage(lang) {
+      const t = translations[lang];
+      document.getElementById('heading').innerText = t.heading;
+      document.getElementById('intro').innerText = t.intro;
+      document.getElementById('sectionTitle').innerText = t.sectionTitle;
+      document.getElementById('sectionContent1').innerText = t.sectionContent1;
+      document.getElementById('sectionContent2').innerText = t.sectionContent2;
+      document.getElementById('sectionContent3').innerText = t.sectionContent3;
+      document.getElementById('sectionContent4').innerText = t.sectionContent4;
+      localStorage.setItem('lang', lang);
+    }
+
+    langToggle.addEventListener('change', () => {
+      setLanguage(langToggle.value);
+    });
+
+    function toggleTheme() {
+      document.body.classList.toggle('dark-mode');
+      const isDark = document.body.classList.contains('dark-mode');
+      document.getElementById('navbar').className = isDark ? "navbar navbar-expand-lg navbar-dark px-3" : "navbar navbar-expand-lg navbar-light bg-light px-3";
+      themeToggle.textContent = isDark ? '☀️' : '🌙';
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }
+
+    themeToggle.addEventListener('click', toggleTheme);
+
+    // Load saved preferences
+    window.onload = () => {
+      const savedLang = localStorage.getItem('lang') || 'id';
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      langToggle.value = savedLang;
+      setLanguage(savedLang);
+      if (savedTheme === 'dark') toggleTheme();
+    };
+  </script>
+</body>
+</html>
