@@ -1,120 +1,584 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MimbarGuru.com</title>
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body.dark-mode {
-      background-color: #121212;
-      color: #f1f1f1;
-    }
-    .dark-mode .card {
-      background-color: #1e1e1e;
-      color: #f1f1f1;
-    }
-    .dark-mode .navbar {
-      background-color: #1e1e1e !important;
-    }
-    .language-toggle, .theme-toggle {
-      margin-left: 10px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MimbarGuru.com - Platform Pendidikan Beretika</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #64748b;
+            --success-color: #10b981;
+            --bg-light: #ffffff;
+            --bg-dark: #0f172a;
+            --text-light: #1e293b;
+            --text-dark: #f8fafc;
+            --card-light: #f8fafc;
+            --card-dark: #1e293b;
+        }
+
+        .dark-mode {
+            --bg-color: var(--bg-dark);
+            --text-color: var(--text-dark);
+            --card-color: var(--card-dark);
+        }
+
+        .light-mode {
+            --bg-color: var(--bg-light);
+            --text-color: var(--text-light);
+            --card-color: var(--card-light);
+        }
+
+        body {
+            background: var(--bg-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.05)"/><circle cx="10" cy="90" r="0.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .card {
+            background: var(--card-color);
+            border: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-radius: 15px;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .btn-theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            background: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .btn-theme-toggle:hover {
+            transform: scale(1.1);
+            background: var(--success-color);
+        }
+
+        .btn-lang-toggle {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 1000;
+            padding: 8px 12px;
+            border-radius: 25px;
+            border: none;
+            background: var(--secondary-color);
+            color: white;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-lang-toggle:hover {
+            background: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .highlight-box {
+            background: rgba(37, 99, 235, 0.1);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            border-radius: 0 10px 10px 0;
+            margin: 2rem 0;
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-icon:hover {
+            transform: rotate(360deg);
+        }
+
+        .author-signature {
+            font-style: italic;
+            font-weight: 600;
+            color: var(--primary-color);
+            text-align: right;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--primary-color);
+        }
+
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+            margin: 3rem 0;
+            border-radius: 1px;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                min-height: 80vh;
+            }
+            
+            .btn-theme-toggle, .btn-lang-toggle {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin: 10px;
+            }
+        }
+    </style>
 </head>
-<body>
-  <nav class="navbar navbar-expand-lg bg-light navbar-light px-3" id="navbar">
-    <a class="navbar-brand fw-bold" href="https://mimbarguru.com">MimbarGuru.com</a>
-    <div class="ms-auto d-flex">
-      <button id="themeToggle" class="btn btn-outline-secondary me-2">🌙</button>
-      <select id="langToggle" class="form-select" style="width:auto;">
-        <option value="id">🇮🇩 ID</option>
-        <option value="en">🇬🇧 EN</option>
-      </select>
+<body class="light-mode">
+    <button class="btn-theme-toggle" onclick="toggleTheme()" title="Toggle Theme">
+        <i class="fas fa-moon" id="theme-icon"></i>
+    </button>
+    
+    <button class="btn-lang-toggle" onclick="toggleLanguage()" id="lang-toggle">
+        EN
+    </button>
+
+    <!-- Indonesian Content -->
+    <div id="content-id" class="language-content">
+        <section class="hero-section">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <h1 class="display-3 fw-bold text-white mb-4 fade-in">
+                            MimbarGuru.com
+                        </h1>
+                        <p class="lead text-white-50 mb-4 fade-in">
+                            Platform Pendidikan Beretika untuk Komunitas yang Saling Menghormati
+                        </p>
+                        <div class="fade-in">
+                            <a href="#story" class="btn btn-light btn-lg me-3">
+                                <i class="fas fa-book-open me-2"></i>Baca Cerita
+                            </a>
+                            <a href="#features" class="btn btn-outline-light btn-lg">
+                                <i class="fas fa-rocket me-2"></i>Fitur Utama
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="text-center fade-in">
+                            <i class="fas fa-graduation-cap" style="font-size: 15rem; color: rgba(255,255,255,0.2);"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="story" class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 mx-auto">
+                        <div class="card fade-in">
+                            <div class="card-body p-5">
+                                <h2 class="text-center mb-5">
+                                    <i class="fas fa-heart text-danger me-3"></i>
+                                    Lahir dari Keprihatinan
+                                </h2>
+                                
+                                <p class="lead">
+                                    MimbarGuru.com lahir dari keprihatinan saya terhadap maraknya penyalahgunaan media sosial yang semakin hari kian meresahkan. Ujaran kebencian, penyebaran hoaks, perundungan digital, hingga fitnah dan manipulasi opini publik menjadi pemandangan yang lazim kita temui. Media sosial yang seharusnya menjadi ruang dialog dan berbagi pengetahuan justru kerap disulap menjadi arena konflik dan pelampiasan emosi.
+                                </p>
+                                
+                                <p>
+                                    Saya mulai bertanya, mengapa ada orang-orang yang dengan mudahnya menyakiti perasaan orang lain, menulis hal-hal yang melanggar etika, bahkan hukum? Saya menemukan satu jawaban sederhana: karena mereka merasa terlindungi di balik topeng akun palsu. Identitas anonim memberi keberanian palsu untuk berkata dan berbuat semaunya.
+                                </p>
+                                
+                                <div class="highlight-box">
+                                    <p class="mb-0">
+                                        <strong>Berangkat dari keresahan inilah</strong>, saya memiliki ide untuk membangun <em>platform</em> sosial yang mirip dengan X (dulu dikenal sebagai Twitter), namun berisi komunitas yang ramah, saling menghormati, dan menjunjung tinggi etika dalam berkomunikasi.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="py-5 bg-light">
+            <div class="container">
+                <h2 class="text-center mb-5 fade-in">
+                    <i class="fas fa-shield-alt text-primary me-3"></i>
+                    Mengapa Akun belajar.id?
+                </h2>
+                
+                <div class="row">
+                    <div class="col-lg-8 mx-auto">
+                        <div class="card fade-in">
+                            <div class="card-body p-4">
+                                <p class="lead text-center mb-4">
+                                    MimbarGuru.com hanya memperbolehkan pendaftaran menggunakan akun resmi <strong>belajar.id</strong>. Mengapa ini penting?
+                                </p>
+                                
+                                <div class="row">
+                                    <div class="col-md-4 text-center mb-4">
+                                        <div class="feature-icon">
+                                            <i class="fas fa-user-check"></i>
+                                        </div>
+                                        <h5>Nama Asli</h5>
+                                        <p>Menggunakan nama asli sebagai username</p>
+                                    </div>
+                                    
+                                    <div class="col-md-4 text-center mb-4">
+                                        <div class="feature-icon">
+                                            <i class="fas fa-ban"></i>
+                                        </div>
+                                        <h5>No Samaran</h5>
+                                        <p>Tidak memungkinkan penggunaan nama samaran</p>
+                                    </div>
+                                    
+                                    <div class="col-md-4 text-center mb-4">
+                                        <div class="feature-icon">
+                                            <i class="fas fa-id-card"></i>
+                                        </div>
+                                        <h5>Identitas Unik</h5>
+                                        <p>Hanya diberikan satu kali kepada setiap individu</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="highlight-box">
+                                    <p class="mb-0">
+                                        <strong>Dengan demikian</strong>, setiap pengguna MimbarGuru.com memiliki identitas yang jelas dan dapat dipertanggungjawabkan. Kami percaya, ketika identitas seseorang nyata dan melekat dengan profesinya, maka akan tumbuh kesadaran untuk lebih berhati-hati dalam menulis dan berinteraksi.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 mx-auto">
+                        <div class="card fade-in">
+                            <div class="card-body p-5">
+                                <h2 class="text-center mb-4">
+                                    <i class="fas fa-seedling text-success me-3"></i>
+                                    Harapan untuk Masa Depan
+                                </h2>
+                                
+                                <p class="lead">
+                                    Harapan saya, MimbarGuru.com dapat menjadi ruang aman dan positif bagi para pendidik, tenaga kependidikan, dan pelaku dunia pendidikan lainnya untuk saling berbagi inspirasi, berdiskusi, serta membangun jejaring yang memperkuat ekosistem pendidikan Indonesia.
+                                </p>
+                                
+                                <p>
+                                    Semoga MimbarGuru.com bukan hanya menjadi <em>platform</em>, tetapi juga menjadi gerakan perubahan menuju ekosistem digital yang lebih sehat, beretika, dan manusiawi.
+                                </p>
+                                
+                                <div class="author-signature">
+                                    — Mawan A. Nugroho, M.Kom.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
-  </nav>
 
-  <div class="container py-5">
-    <div class="text-center">
-      <h1 id="heading"></h1>
-      <p id="intro" class="lead mt-3"></p>
+    <!-- English Content -->
+    <div id="content-en" class="language-content" style="display: none;">
+        <section class="hero-section">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <h1 class="display-3 fw-bold text-white mb-4 fade-in">
+                            MimbarGuru.com
+                        </h1>
+                        <p class="lead text-white-50 mb-4 fade-in">
+                            Ethical Education Platform for a Respectful Community
+                        </p>
+                        <div class="fade-in">
+                            <a href="#story-en" class="btn btn-light btn-lg me-3">
+                                <i class="fas fa-book-open me-2"></i>Read Story
+                            </a>
+                            <a href="#features-en" class="btn btn-outline-light btn-lg">
+                                <i class="fas fa-rocket me-2"></i>Key Features
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="text-center fade-in">
+                            <i class="fas fa-graduation-cap" style="font-size: 15rem; color: rgba(255,255,255,0.2);"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="story-en" class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 mx-auto">
+                        <div class="card fade-in">
+                            <div class="card-body p-5">
+                                <h2 class="text-center mb-5">
+                                    <i class="fas fa-heart text-danger me-3"></i>
+                                    Born from Concern
+                                </h2>
+                                
+                                <p class="lead">
+                                    <strong>MimbarGuru.com</strong> emerged from my growing concern over the rampant misuse of social media, which has become increasingly alarming. Hate speech, hoax proliferation, cyberbullying, slander, and the manipulation of public opinion are now disturbingly common. What should be a space for dialogue and knowledge-sharing has too often devolved into a battleground for conflict and unchecked emotional outbursts.
+                                </p>
+                                
+                                <p>
+                                    This prompted me to ask: Why do some people so easily hurt others, posting content that violates ethics—or even the law? The answer, I realized, lies in the anonymity of fake accounts. Hidden behind digital masks, individuals gain a false sense of courage to act and speak without consequence.
+                                </p>
+                                
+                                <div class="highlight-box">
+                                    <p class="mb-0">
+                                        <strong>Driven by these concerns</strong>, I envisioned a social platform akin to X (formerly Twitter) but designed for a community rooted in kindness, mutual respect, and ethical communication.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features-en" class="py-5 bg-light">
+            <div class="container">
+                <h2 class="text-center mb-5 fade-in">
+                    <i class="fas fa-shield-alt text-primary me-3"></i>
+                    Why belajar.id Accounts?
+                </h2>
+                
+                <div class="row">
+                    <div class="col-lg-8 mx-auto">
+                        <div class="card fade-in">
+                            <div class="card-body p-4">
+                                <p class="lead text-center mb-4">
+                                    <strong>MimbarGuru.com</strong> requires users to register exclusively via their official <em>belajar.id</em> accounts. Why?
+                                </p>
+                                
+                                <div class="row">
+                                    <div class="col-md-4 text-center mb-4">
+                                        <div class="feature-icon">
+                                            <i class="fas fa-user-check"></i>
+                                        </div>
+                                        <h5>Real Names</h5>
+                                        <p>Real-name authenticity (no anonymous aliases)</p>
+                                    </div>
+                                    
+                                    <div class="col-md-4 text-center mb-4">
+                                        <div class="feature-icon">
+                                            <i class="fas fa-fingerprint"></i>
+                                        </div>
+                                        <h5>Unique Identity</h5>
+                                        <p>Unique identity (one account per individual)</p>
+                                    </div>
+                                    
+                                    <div class="col-md-4 text-center mb-4">
+                                        <div class="feature-icon">
+                                            <i class="fas fa-graduation-cap"></i>
+                                        </div>
+                                        <h5>Education Focus</h5>
+                                        <p>Exclusive access for Indonesia's education system</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="highlight-box">
+                                    <p class="mb-0">
+                                        This guarantees that every user on <strong>MimbarGuru.com</strong> has a clear, accountable identity. I believe that when individuals are tied to their real names and professional roles, they become more mindful of their words and actions.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 mx-auto">
+                        <div class="card fade-in">
+                            <div class="card-body p-5">
+                                <h2 class="text-center mb-4">
+                                    <i class="fas fa-seedling text-success me-3"></i>
+                                    Hope for the Future
+                                </h2>
+                                
+                                <p class="lead">
+                                    My hope is for <strong>MimbarGuru.com</strong> to serve as a safe, positive space where educators, school staff, and education stakeholders can exchange ideas, collaborate, and build networks to strengthen Indonesia's educational ecosystem.
+                                </p>
+                                
+                                <p>
+                                    May this platform not only exist as a tool but also inspire a movement toward a healthier, more ethical, and humane digital culture.
+                                </p>
+                                
+                                <div class="author-signature">
+                                    — Mawan A. Nugroho, M.Kom.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 
-    <div class="card mt-5 shadow">
-      <div class="card-body">
-        <h5 class="card-title" id="sectionTitle"></h5>
-        <p class="card-text" id="sectionContent1"></p>
-        <p class="card-text" id="sectionContent2"></p>
-        <p class="card-text" id="sectionContent3"></p>
-        <p class="card-text" id="sectionContent4"></p>
-      </div>
-    </div>
-  </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Theme toggle functionality
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+            
+            if (body.classList.contains('light-mode')) {
+                body.classList.remove('light-mode');
+                body.classList.add('dark-mode');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                body.classList.remove('dark-mode');
+                body.classList.add('light-mode');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        }
 
-  <footer class="text-center py-4">
-    <small>&copy; 2025 <a href="https://mimbarguru.com">MimbarGuru.com</a></small>
-  </footer>
+        // Language toggle functionality
+        function toggleLanguage() {
+            const contentId = document.getElementById('content-id');
+            const contentEn = document.getElementById('content-en');
+            const langToggle = document.getElementById('lang-toggle');
+            
+            if (contentId.style.display !== 'none') {
+                contentId.style.display = 'none';
+                contentEn.style.display = 'block';
+                langToggle.textContent = 'ID';
+                document.documentElement.lang = 'en';
+            } else {
+                contentId.style.display = 'block';
+                contentEn.style.display = 'none';
+                langToggle.textContent = 'EN';
+                document.documentElement.lang = 'id';
+            }
+            
+            // Re-trigger fade-in animations
+            setTimeout(() => {
+                triggerFadeInAnimations();
+            }, 100);
+        }
 
-  <script>
-    const translations = {
-      id: {
-        heading: "Selamat Datang di MimbarGuru.com",
-        intro: "MimbarGuru.com lahir dari keprihatinan terhadap maraknya penyalahgunaan media sosial yang kerap disalahgunakan untuk menyebarkan ujaran kebencian, hoaks, perundungan, fitnah, dan perilaku tidak etis lainnya.",
-        sectionTitle: "Mengapa MimbarGuru.com?",
-        sectionContent1: "Saya mulai bertanya: mengapa seseorang begitu mudah menuliskan hal-hal yang menyakitkan dan melanggar etika? Jawabannya sering kali karena mereka merasa aman di balik akun palsu atau anonim.",
-        sectionContent2: "Maka dari itu, MimbarGuru.com hanya mengizinkan pendaftaran melalui akun resmi belajar.id — akun yang menggunakan nama asli, unik, dan tidak bisa dibuat lebih dari satu untuk setiap individu.",
-        sectionContent3: "Saya percaya bahwa dunia digital harus menjadi tempat yang aman, ramah, dan membangun. Dengan pengguna yang teridentifikasi dengan jelas, setiap orang akan lebih bertanggung jawab atas apa yang dituliskannya.",
-        sectionContent4: "Karena saya ingin menghadirkan ruang sosial yang sehat bagi para pendidik, tenaga kependidikan, dan insan pendidikan Indonesia. Di sini, Anda bisa berdiskusi, berbagi inspirasi, dan membangun kolaborasi tanpa rasa takut akan serangan atau cemoohan. Mari bersama-sama menjadikan dunia maya sebagai tempat yang mencerdaskan dan menguatkan, bukan sebaliknya."
-      },
-      en: {
-        heading: "Welcome to MimbarGuru.com",
-        intro: "MimbarGuru.com was born out of concern over the widespread misuse of social media, which is often used to spread hate speech, hoaxes, bullying, slander, and other unethical behaviors.",
-        sectionTitle: "Why MimbarGuru.com?",
-        sectionContent1: "I began to ask: why do people so easily write hurtful and unethical things? The answer often lies in the sense of safety provided by fake or anonymous accounts.",
-        sectionContent2: "Therefore, MimbarGuru.com only allows registration through official belajar.id accounts — accounts that use real names, are unique, and cannot be created more than once per individual.",
-        sectionContent3: "I believe that the digital world should be a safe, friendly, and constructive space. With clearly identified users, everyone becomes more responsible for what they write.",
-        sectionContent4: "Because I want to provide a healthy social space for educators, education staff, and the broader education community in Indonesia. Here, you can discuss, share inspiration, and build collaboration without fear of attacks or ridicule. Let us work together to make the digital world a place that enlightens and empowers — not the other way around."
-      }
-    };
+        // Fade-in animation on scroll
+        function triggerFadeInAnimations() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
 
-    const langToggle = document.getElementById('langToggle');
-    const themeToggle = document.getElementById('themeToggle');
+            fadeElements.forEach(element => {
+                element.classList.remove('visible');
+                observer.observe(element);
+            });
+        }
 
-    function setLanguage(lang) {
-      const t = translations[lang];
-      document.getElementById('heading').innerText = t.heading;
-      document.getElementById('intro').innerText = t.intro;
-      document.getElementById('sectionTitle').innerText = t.sectionTitle;
-      document.getElementById('sectionContent1').innerText = t.sectionContent1;
-      document.getElementById('sectionContent2').innerText = t.sectionContent2;
-      document.getElementById('sectionContent3').innerText = t.sectionContent3;
-      document.getElementById('sectionContent4').innerText = t.sectionContent4;
-      localStorage.setItem('lang', lang);
-    }
+        // Initialize animations when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            triggerFadeInAnimations();
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
 
-    langToggle.addEventListener('change', () => {
-      setLanguage(langToggle.value);
-    });
-
-    function toggleTheme() {
-      document.body.classList.toggle('dark-mode');
-      const isDark = document.body.classList.contains('dark-mode');
-      document.getElementById('navbar').className = isDark ? "navbar navbar-expand-lg navbar-dark px-3" : "navbar navbar-expand-lg navbar-light bg-light px-3";
-      themeToggle.textContent = isDark ? '☀️' : '🌙';
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    }
-
-    themeToggle.addEventListener('click', toggleTheme);
-
-    // Load saved preferences
-    window.onload = () => {
-      const savedLang = localStorage.getItem('lang') || 'id';
-      const savedTheme = localStorage.getItem('theme') || 'light';
-      langToggle.value = savedLang;
-      setLanguage(savedLang);
-      if (savedTheme === 'dark') toggleTheme();
-    };
-  </script>
+        // Add some interactive hover effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        });
+    </script>
 </body>
 </html>
