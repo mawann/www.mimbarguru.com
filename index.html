@@ -23,12 +23,14 @@
             --bg-color: var(--bg-dark);
             --text-color: var(--text-dark);
             --card-color: var(--card-dark);
+            --bg-section: #1e293b;
         }
 
         .light-mode {
             --bg-color: var(--bg-light);
             --text-color: var(--text-light);
             --card-color: var(--card-light);
+            --bg-section: #f8fafc;
         }
 
         body {
@@ -69,6 +71,11 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
             border-radius: 15px;
+            color: var(--text-color);
+        }
+
+        .dark-mode .card {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
         .card:hover {
@@ -123,6 +130,12 @@
             padding: 1.5rem;
             border-radius: 0 10px 10px 0;
             margin: 2rem 0;
+            color: var(--text-color);
+        }
+
+        .dark-mode .highlight-box {
+            background: rgba(37, 99, 235, 0.2);
+            color: var(--text-dark);
         }
 
         .feature-icon {
@@ -255,9 +268,9 @@
             </div>
         </section>
 
-        <section id="features" class="py-5 bg-light">
+        <section id="features" class="py-5" style="background: var(--bg-section);">
             <div class="container">
-                <h2 class="text-center mb-5 fade-in">
+                <h2 class="text-center mb-5 fade-in" style="color: var(--text-color);">
                     <i class="fas fa-shield-alt text-primary me-3"></i>
                     Mengapa Akun belajar.id?
                 </h2>
@@ -399,9 +412,9 @@
             </div>
         </section>
 
-        <section id="features-en" class="py-5 bg-light">
+        <section id="features-en" class="py-5" style="background: var(--bg-section);">
             <div class="container">
-                <h2 class="text-center mb-5 fade-in">
+                <h2 class="text-center mb-5 fade-in" style="color: var(--text-color);">
                     <i class="fas fa-shield-alt text-primary me-3"></i>
                     Why belajar.id Accounts?
                 </h2>
